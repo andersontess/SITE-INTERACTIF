@@ -1,0 +1,88 @@
+body {
+  font-size: 40px;
+  color:rgb(186, 186, 186);
+  font: bold 18px "Jersey 15", sans-serif;
+}
+
+
+.filters {
+  position: fixed;
+  left: 20px;
+  top: 50px;
+  z-index: 1000; /* Makes sure they are above everything */
+  
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  
+  color: black;
+  background: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  
+
+}
+
+/* .filters:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+} */
+
+
+.filters:hover {
+  background: red; /* Changes color when hovered */
+  transform: scale(1.1); /* Slightly increases size */
+}
+
+
+.filters:nth-child(1) { top: 135px; } 
+.filters:nth-child(2) { top: 275px; } 
+.filters:nth-child(3) { top: 425px; } 
+.filters:nth-child(4) { top: 575px; }
+
+
+.shapes {
+  position: fixed;
+  right: 20px;
+  top: 50px;
+  z-index: 1000; /* Makes sure they are above everything */
+  
+  width: 140px;
+  height: 140px;
+  
+  color: black;
+  background: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+
+  
+
+}
+
+.shapes:hover {
+  background: red; /* Changes color when hovered */
+  transform: scale(1.1); /* Slightly increases size */
+}
+
+.shapes:nth-child(1) { 
+  top: 275px; 
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+  79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+  2% 35%, 39% 35%);
+}
+
+.shapes:nth-child(2) {
+  top: 450px; 
+  width: 100px;
+  height: 100px;
+  right: 40px;
+}
+
+canvas {
+  display: block;
+}
