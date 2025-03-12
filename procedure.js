@@ -2,6 +2,7 @@ let photos = [];
 let currentImage;
 let drawing = false;
 let currentFilter = null;
+let currentDecoupe = 'square';                                              
 
 function preload() {
     for (let i = 1; i < 25; i++) {
@@ -16,6 +17,16 @@ function setup() {
     imageMode(CENTER);
     frameRate(60);
     background(0);
+
+    let instructions = createP("Press 'D' to draw, Press 'S' to save");
+    instructions.style("color", "white");
+    instructions.style("font-size", "18px");
+    instructions.style("font-weight", "bold");
+    instructions.style("text-align", "center");
+    instructions.style("background", "black");
+    instructions.style("padding", "10px");
+    instructions.style("width", "100%");
+    instructions.position(0, 0);
 }
 
 
