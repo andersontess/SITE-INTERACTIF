@@ -2,13 +2,16 @@ let photos = [];
 let currentImage;
 let drawing = false;
 let currentFilter = null;
-let currentDecoupe = 'square';                                              
+let currentDecoupe = 'star';         
+let currentColor = 'random'                                     ;
+
 
 function preload() {
-    for (let i = 1; i < 25; i++) {
+    for (let i = 2; i < 13; i++) {
         photos[i] = loadImage('img/photo' + i + '.png');
     }
 }
+
 
 function setup() {
     let cnv = createCanvas(windowWidth, windowHeight);
@@ -26,6 +29,7 @@ function setup() {
     instructions.style("background", "black");
     instructions.style("padding", "10px");
     instructions.style("width", "100%");
+    instructions.style("font-family", "Arial");
     instructions.position(0, 0);
 }
 
@@ -37,31 +41,43 @@ function draw() {
         let randomX = random(currentImage.width - decoupeSize);
         let randomY = random(currentImage.height - decoupeSize);
 
-
         let decoupe = currentImage.get(randomX, randomY, decoupeSize, decoupeSize);
+
 
         if (currentDecoupe) {
             if (currentDecoupe === 'star') {
                 let maskedDecoupe = createStarMask(decoupe);
-                tint(random(255), random(255), random(255));
+                if (currentColor === 'white') {
+                    tint(255);
+                } else if (currentColor === 'black') {
+                    tint(0);
+                } else if (currentColor === 'random') {
+                    tint(random(255), random(255), random(255));
+                }
                 image(maskedDecoupe, mouseX, mouseY);
-                noTint();
-            } else if (currentDecoupe === 'square') {
-                tint(random(255), random(255), random(255));
-                image(decoupe, mouseX, mouseY);
-                noTint();
+            } else if (currentDecoupe === 'heart') {
+                let maskedDecoupe = createHeartMask(decoupe);
+                if (currentColor === 'white') {
+                    tint(255, 255, 255);
+                } else if (currentColor === 'black') {
+                    tint(0);
+                } else if (currentColor === 'random') {
+                    tint(random(255), random(255), random(255));
+                }
+                image(maskedDecoupe, mouseX, mouseY);
             }
         }
-
+        noTint();
         
     }
 }
+
 
 function createStarMask(img) {
     let pg = createGraphics(img.width, img.height);
     pg.clear();
 
-    let starSize = img.width * 0.75; 
+    let starSize = img.width * 0.25; 
     let cx = img.width / 2;
     let cy = img.height / 2;
     let radius1 = starSize / 2; 
@@ -83,19 +99,45 @@ function createStarMask(img) {
     return img;
 }
 
+
+function createHeartMask(img) {
+    let pg = createGraphics(img.width, img.height);
+    pg.clear();
+
+    let size = img.width * 0.5; 
+    let cx = img.width / 2;
+    let cy = img.height / 2;
+    let topOffset = size * 0.1; 
+
+    pg.fill(255); // White mask
+    pg.noStroke();
+
+    pg.beginShape();
+    
+    // Left curve
+    pg.vertex(cx, cy + size * 0.3); 
+    pg.bezierVertex(cx - size * 0.5, cy - topOffset, cx - size * 0.3, cy - size * 0.6, cx, cy - size * 0.3);
+    
+    // Right curve
+    pg.bezierVertex(cx + size * 0.3, cy - size * 0.6, cx + size * 0.5, cy - topOffset, cx, cy + size * 0.3);
+    
+    pg.endShape(CLOSE);
+
+    img.mask(pg);
+    return img;
+}
+
+
 function mousePressed(event) {
     // Check if the click happened inside a button
     if (event.target.closest("button")) {
-        return; // Do nothing if a button was clicked
+        return; 
     }
 
     // Otherwise, proceed with showing a random image
     background(0);
     let img = random(photos);
     currentImage = img;
-
-
-
 
     let imgW = currentImage.width;
     let imgH = currentImage.height;
@@ -107,6 +149,7 @@ function mousePressed(event) {
     image(img, width / 2, height / 2, newWidth, newHeight);
     noTint();
 }
+
 
 function keyPressed() {
     if (key === 's') {

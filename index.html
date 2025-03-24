@@ -24,8 +24,14 @@
 
     <div id="shape-buttons">
       <button type="button" class="shapes" onclick="applyShape('star')">Star</button> 
-      <button type="button" class="shapes" onclick="applyShape('square')">Square</button> 
+      <button type="button" class="shapes" onclick="applyShape('heart')">Heart</button> 
   </div>
+
+    <div id="color-buttons">
+      <button type="button" class="colors" onclick="applyColor('white')">White</button>
+      <button type="button" class="colors" onclick="applyColor('black')">Black</button>
+      <button type="button" class="colors" onclick="applyColor('random')">Random</button>
+  </div>    
 
   <script>
     function applyFilter(selectedFilter) {
@@ -60,8 +66,11 @@
         redraw();
       }
     </script>
-
-
-
+    
+    <script>
+      function applyColor(selectedColor) {
+        currentColor = selectedColor;
+      }
+    </script>
   </body>
 </html>

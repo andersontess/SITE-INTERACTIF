@@ -25,12 +25,6 @@ body {
 
 }
 
-/* .filters:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-} */
-
 
 .filters:hover {
   background: red; /* Changes color when hovered */
@@ -82,6 +76,56 @@ body {
   height: 100px;
   right: 40px;
 }
+
+
+
+.colors {
+  position: fixed;
+  right: 20px;
+  top: 50px;
+  z-index: 1000; /* Makes sure they are above everything */
+  
+  width: 140px;
+  height: 140px;
+  
+  color: black;
+  background: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+
+  
+
+}
+
+.colors:hover {
+  background: red; /* Changes color when hovered */
+  transform: scale(1.1); /* Slightly increases size */
+}
+
+.colors:nth-child(1) { 
+  top: 100px; 
+  width: 70px;
+  height: 25px;
+  right: 60px;
+
+}
+
+.colors:nth-child(2) {
+  top: 150px; 
+  width: 70px;
+  height: 25px;
+  right: 60px;
+}
+
+.colors:nth-child(3) {
+  top: 200px; 
+  width: 70px;
+  height: 25px;
+  right: 60px;
+}
+
 
 canvas {
   display: block;
