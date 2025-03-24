@@ -43,33 +43,57 @@ function draw() {
 
         let decoupe = currentImage.get(randomX, randomY, decoupeSize, decoupeSize);
 
+        // Change color manually instead of using tint()
+        if (currentColor !== 'original') {
+            decoupe = recolorImage(decoupe, currentColor);
+        }
 
         if (currentDecoupe) {
+            let maskedDecoupe;
             if (currentDecoupe === 'star') {
-                let maskedDecoupe = createStarMask(decoupe);
-                if (currentColor === 'white') {
-                    tint(255);
-                } else if (currentColor === 'black') {
-                    tint(0);
-                } else if (currentColor === 'random') {
-                    tint(random(255), random(255), random(255));
-                }
-                image(maskedDecoupe, mouseX, mouseY);
+                maskedDecoupe = createStarMask(decoupe);
             } else if (currentDecoupe === 'heart') {
-                let maskedDecoupe = createHeartMask(decoupe);
-                if (currentColor === 'white') {
-                    tint(255, 255, 255);
-                } else if (currentColor === 'black') {
-                    tint(0);
-                } else if (currentColor === 'random') {
-                    tint(random(255), random(255), random(255));
-                }
-                image(maskedDecoupe, mouseX, mouseY);
+                maskedDecoupe = createHeartMask(decoupe);
             }
+
+            image(maskedDecoupe, mouseX, mouseY);
         }
-        noTint();
-        
     }
+}
+
+function recolorImage(img, color) {
+    let recolored = createImage(img.width, img.height);
+    recolored.loadPixels();
+    img.loadPixels();
+
+    let rNew, gNew, bNew;
+    if (color === 'white') {
+        rNew = 255; gNew = 255; bNew = 255;
+    } else if (color === 'black') {
+        rNew = 0; gNew = 0; bNew = 0;
+    } else if (color === 'random') {
+        rNew = random(255);
+        gNew = random(255);
+        bNew = random(255);
+    }
+
+    for (let i = 0; i < img.pixels.length; i += 4) {
+        let alpha = img.pixels[i + 3]; 
+        if (alpha > 0) { 
+            recolored.pixels[i] = rNew;
+            recolored.pixels[i + 1] = gNew;
+            recolored.pixels[i + 2] = bNew;
+            recolored.pixels[i + 3] = alpha;
+        } else {
+            recolored.pixels[i] = img.pixels[i];
+            recolored.pixels[i + 1] = img.pixels[i + 1];
+            recolored.pixels[i + 2] = img.pixels[i + 2];
+            recolored.pixels[i + 3] = img.pixels[i + 3];
+        }
+    }
+
+    recolored.updatePixels();
+    return recolored;
 }
 
 
@@ -77,7 +101,7 @@ function createStarMask(img) {
     let pg = createGraphics(img.width, img.height);
     pg.clear();
 
-    let starSize = img.width * 0.25; 
+    let starSize = img.width * 0.35; 
     let cx = img.width / 2;
     let cy = img.height / 2;
     let radius1 = starSize / 2; 
